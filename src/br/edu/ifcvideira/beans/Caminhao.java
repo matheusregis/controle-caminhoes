@@ -49,8 +49,4 @@ public class Caminhao {
 		this.moduloCaminhao = moduloCaminhao;
 		
 	}
-
-
-	
-
 }

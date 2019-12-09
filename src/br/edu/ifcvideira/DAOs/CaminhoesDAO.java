@@ -34,13 +34,11 @@ public class CaminhoesDAO{
 
 	public void alterarCaminhao(Caminhao caminhao) throws Exception {
 		try{
-			String sql = "UPDATE caminhao SET placa=?, idtipocaminhao=?, idmodulo=? WHERE codigo=?";
-			PreparedStatement sqlPrep = Conexao.conectar().prepareStatement(sql);
-			int contador = 1;
-			sqlPrep.setString(contador++, caminhao.getPlaca());
-			sqlPrep.setInt(contador++, caminhao.getTipoCaminhao());
-			sqlPrep.setInt(contador++, caminhao.getModuloCaminhao());
-			sqlPrep.setInt(contador++, caminhao.getCodigo());
+			PreparedStatement sqlPrep = Conexao.conectar().prepareStatement("UPDATE caminhao SET placa=?, idtipocaminhao=?, idmodulo=? WHERE idcaminhao=?");
+			sqlPrep.setString(1, caminhao.getPlaca());
+			sqlPrep.setInt(2, caminhao.getTipoCaminhao());
+			sqlPrep.setInt(3, caminhao.getModuloCaminhao());
+			sqlPrep.setInt(4, caminhao.getCodigo());
 			sqlPrep.execute();
 		}catch(Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
@@ -113,26 +111,6 @@ public class CaminhoesDAO{
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		return moduloCaminhao;
-	}
-	
-	public List<Object> buscarCaminhao() throws SQLException, Exception{
-		List<Object> caminhao = new ArrayList<Object>();
-		try {
-			String sql = "SELECT * FROM caminhao";
-			java.sql.Statement state = Conexao.conectar().createStatement();
-			ResultSet rs = state.executeQuery(sql);
-			
-			while (rs.next())
-			{
-				Object[] linha = {rs.getString(1), rs.getString(2), rs.getString(3)};
-				caminhao.add(linha);
-			}
-			state.close();
-			
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
-		return caminhao;
 	}
 	
 }

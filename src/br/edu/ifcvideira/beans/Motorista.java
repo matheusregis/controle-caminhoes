@@ -3,6 +3,7 @@ package br.edu.ifcvideira.beans;
 import java.security.Timestamp;
 
 public class Motorista {
+	private int idMotorista = 1;
 	private String nomeMotorista;
 	private String telefone;
 	private String cpf;
@@ -11,6 +12,22 @@ public class Motorista {
 	
 	public Motorista() {
 		
+	}
+	
+	public int getIdMotorista() {
+		return idMotorista;
+	}
+
+	public Motorista(int idMotorista, String nomeMotorista, String telefone, String cpf) {
+		super();
+		this.idMotorista = idMotorista;
+		this.nomeMotorista = nomeMotorista;
+		this.telefone = telefone;
+		this.cpf = cpf;
+	}
+
+	public void setIdMotorista(int idMotorista) {
+		this.idMotorista = idMotorista;
 	}
 
 	public String getNomeMotorista() {

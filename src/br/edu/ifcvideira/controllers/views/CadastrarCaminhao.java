@@ -156,11 +156,11 @@ public class CadastrarCaminhao extends JFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					dao.deletarCaminhao(caminhao);
-					JOptionPane.showMessageDialog(null, "O Caminhão Código: "+caminhao.getCodigo()+"\n"
+					dao.deletarCaminhao(ca);
+					JOptionPane.showMessageDialog(null, "O Caminhão Código: "+ca.getCodigo()+"\n"
 							+ "Placa: "+caminhao.getPlaca()+"\n"
-									+ "Tipo Caminhão: "+caminhao.getTipoCaminhao()+"\n"
-											+ "Módulo: "+caminhao.getModuloCaminhao()+"\n"
+									+ "Tipo Caminhão: "+ca.getTipoCaminhao()+"\n"
+											+ "Módulo: "+ca.getModuloCaminhao()+"\n"
 													+ "Foi Excluído com Sucesso!");
 					limpar();
 					
@@ -176,6 +176,37 @@ public class CadastrarCaminhao extends JFrame {
 		contentPane.add(btnExcluir);
 		
 		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ca = dao.buscarPlacaCaminhao(textBuscar.getText());
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				ca.setPlaca(textPlaca.getText());
+				selecionarOpcao();
+				
+				if (cbModulo.getSelectedIndex() > 0 && cbTipo.getSelectedIndex() > 0) {
+					
+					limpar();
+					try {
+						
+						dao.alterarCaminhao(ca);
+						JOptionPane.showMessageDialog(null, "O Caminhão Código: "+ca.getCodigo()+"\n"
+								+ "Placa: "+ca.getPlaca()+"\n"
+										+ "Tipo Caminhão: "+ca.getTipoCaminhao()+"\n"
+												+ "Módulo: "+ca.getModuloCaminhao()+"\n"
+														+ "Foi Alterado com Sucesso!");
+						
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		btnAlterar.setFont(new Font("SansSerif", Font.BOLD, 16));
 		btnAlterar.setBackground(Color.YELLOW);
 		btnAlterar.setBounds(200, 359, 111, 36);
@@ -187,27 +218,8 @@ public class CadastrarCaminhao extends JFrame {
 				
 				ca.setPlaca(textPlaca.getText());
 				
-				if (cbModulo.getSelectedIndex()== 0 || cbTipo.getSelectedIndex()==0) {
-					JOptionPane.showMessageDialog(null, "Selecione uma Opção!");
-				}else if (cbModulo.getSelectedIndex()==1) {
-					ca.setModuloCaminhao(1);
-				}else if (cbModulo.getSelectedIndex()==2) {
-					ca.setModuloCaminhao(2);
-				}else if (cbModulo.getSelectedIndex()==3) {
-					ca.setModuloCaminhao(3);
-				}
+				selecionarOpcao();
 				
-				if (cbTipo.getSelectedIndex()==1) {
-					ca.setTipoCaminhao(1);
-				}else if (cbTipo.getSelectedIndex()==2) {
-					ca.setTipoCaminhao(2);
-				}else if (cbTipo.getSelectedIndex()==3) {
-					ca.setTipoCaminhao(3);
-				}else if (cbTipo.getSelectedIndex()==4) {
-					ca.setTipoCaminhao(4);
-				}else if (cbTipo.getSelectedIndex()==5) {
-					ca.setTipoCaminhao(5);
-				}
 				if (cbModulo.getSelectedIndex() > 0 && cbTipo.getSelectedIndex() > 0) {
 					
 					limpar();
@@ -246,6 +258,31 @@ public class CadastrarCaminhao extends JFrame {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
+	}
+	public void selecionarOpcao() {
+		
+		if (cbModulo.getSelectedIndex()== 0 || cbTipo.getSelectedIndex()==0) {
+			JOptionPane.showMessageDialog(null, "Selecione uma Opção!");
+		}else if (cbModulo.getSelectedIndex()==1) {
+			ca.setModuloCaminhao(1);
+		}else if (cbModulo.getSelectedIndex()==2) {
+			ca.setModuloCaminhao(2);
+		}else if (cbModulo.getSelectedIndex()==3) {
+			ca.setModuloCaminhao(3);
+		}
+		
+		if (cbTipo.getSelectedIndex()==1) {
+			ca.setTipoCaminhao(1);
+		}else if (cbTipo.getSelectedIndex()==2) {
+			ca.setTipoCaminhao(2);
+		}else if (cbTipo.getSelectedIndex()==3) {
+			ca.setTipoCaminhao(3);
+		}else if (cbTipo.getSelectedIndex()==4) {
+			ca.setTipoCaminhao(4);
+		}else if (cbTipo.getSelectedIndex()==5) {
+			ca.setTipoCaminhao(5);
+		}
+		
 	}
 		
 }
