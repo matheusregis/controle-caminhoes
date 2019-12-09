@@ -1,12 +1,28 @@
 package br.edu.ifcvideira.beans;
 
 public class Fornecedor {
+	private int idFornecedor;
 	private String nomeFornecedor;
 	private String cidade;
 	private String estado;
 	
 	public Fornecedor() {
 		
+	}
+	
+	public int getIdFornecedor() {
+		return idFornecedor;
+	}
+
+	public void setIdFornecedor(int idFornecedor) {
+		this.idFornecedor = idFornecedor;
+	}
+	
+	public Fornecedor(int idFornecedor, String nomeFornecedor, String cidade, String estado) {
+		this.idFornecedor = idFornecedor;
+		this.nomeFornecedor = nomeFornecedor;
+		this.cidade = cidade;
+		this.estado = estado;
 	}
 
 	public String getNomeFornecedor() {

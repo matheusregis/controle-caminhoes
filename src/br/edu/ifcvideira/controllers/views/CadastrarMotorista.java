@@ -31,7 +31,6 @@ public class CadastrarMotorista extends JFrame {
 	private JPanel contentPane;
 	private JTextField textBuscar;
 	private JTextField textNomeMotorista;
-	Motorista motorista;
 	Motorista mo = new Motorista();
 	MotoristaDAO dao = new MotoristaDAO();
 	private JTextField textCpf;
@@ -84,10 +83,10 @@ public class CadastrarMotorista extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					
-					motorista = dao.buscarDadosMotorista(textBuscar.getText());
-					textNomeMotorista.setText(motorista.getNomeMotorista());					
-					textCpf.setText(motorista.getCpf());
-					textTelefone.setText(motorista.getTelefone());
+					mo = dao.buscarDadosMotorista(textBuscar.getText());
+					textNomeMotorista.setText(mo.getNomeMotorista());					
+					textCpf.setText(mo.getCpf());
+					textTelefone.setText(mo.getTelefone());
 					
 				} catch (Exception e1) {
 					
@@ -139,11 +138,11 @@ public class CadastrarMotorista extends JFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					dao.deletarMotorista(motorista);
-					JOptionPane.showMessageDialog(null, "O Motorista Código: "+motorista.getIdMotorista()+"\n"
-							+ "Nome: "+motorista.getNomeMotorista()+"\n"
-									+ "CPF: "+motorista.getCpf()+"\n"
-											+ "Telefone: "+motorista.getTelefone()+"\n"
+					dao.deletarMotorista(mo);
+					JOptionPane.showMessageDialog(null, "O Motorista Código: "+mo.getIdMotorista()+"\n"
+							+ "Nome: "+mo.getNomeMotorista()+"\n"
+									+ "CPF: "+mo.getCpf()+"\n"
+											+ "Telefone: "+mo.getTelefone()+"\n"
 													+ "Foi Excluído com Sucesso!");
 					limpar();
 					
@@ -177,7 +176,7 @@ public class CadastrarMotorista extends JFrame {
 					
 					dao.alterarMotorista(mo);
 					JOptionPane.showMessageDialog(null, "O Motorista Código: "+mo.getIdMotorista()+"\n"
-							+ "Nome: "+motorista.getNomeMotorista()+"\n"
+							+ "Nome: "+mo.getNomeMotorista()+"\n"
 									+ "CPF: "+mo.getCpf()+"\n"
 											+ "Telefone: "+mo.getTelefone()+"\n"
 													+ "Foi Alterado com Sucesso!");

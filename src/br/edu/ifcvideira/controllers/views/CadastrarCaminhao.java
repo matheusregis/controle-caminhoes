@@ -34,7 +34,6 @@ public class CadastrarCaminhao extends JFrame {
 	
 	JComboBox cbModulo = new JComboBox();
 	JComboBox cbTipo = new JComboBox();
-	Caminhao caminhao;
 	Caminhao ca = new Caminhao();
 	CaminhoesDAO dao = new CaminhoesDAO();
 	
@@ -90,10 +89,10 @@ public class CadastrarCaminhao extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					
-					caminhao = dao.buscarPlacaCaminhao(textBuscar.getText());
-					textPlaca.setText(caminhao.getPlaca());
-					cbTipo.setSelectedIndex(caminhao.getTipoCaminhao());
-					cbModulo.setSelectedIndex(caminhao.getModuloCaminhao());
+					ca = dao.buscarPlacaCaminhao(textBuscar.getText());
+					textPlaca.setText(ca.getPlaca());
+					cbTipo.setSelectedIndex(ca.getTipoCaminhao());
+					cbModulo.setSelectedIndex(ca.getModuloCaminhao());
 					
 					
 					
@@ -158,7 +157,7 @@ public class CadastrarCaminhao extends JFrame {
 				try {
 					dao.deletarCaminhao(ca);
 					JOptionPane.showMessageDialog(null, "O Caminhão Código: "+ca.getCodigo()+"\n"
-							+ "Placa: "+caminhao.getPlaca()+"\n"
+							+ "Placa: "+ca.getPlaca()+"\n"
 									+ "Tipo Caminhão: "+ca.getTipoCaminhao()+"\n"
 											+ "Módulo: "+ca.getModuloCaminhao()+"\n"
 													+ "Foi Excluído com Sucesso!");
@@ -221,13 +220,10 @@ public class CadastrarCaminhao extends JFrame {
 				selecionarOpcao();
 				
 				if (cbModulo.getSelectedIndex() > 0 && cbTipo.getSelectedIndex() > 0) {
-					
 					limpar();
-					
 					try {
 						dao.cadastrarCaminhao(ca);
 						JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso!");
-						
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

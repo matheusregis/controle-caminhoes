@@ -77,21 +77,6 @@ public class MotoristaDAO{
 		return motorista;
 			
 	}
-	public int retornarProximoCodigoMotorista() throws Exception {
-		try{
-			String sql ="SELECT MAX(idmotorista)+1 AS idmotorista FROM motorista ";
-			PreparedStatement sqlPrep = Conexao.conectar().prepareStatement(sql);
-			ResultSet rs = sqlPrep.executeQuery();
-			if (rs.next()){
-				return rs.getInt("idmotorista");
-			}else{
-				return 1;
-			}
-		} catch(Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			return 1;
-		}
-	}
 	
 }
 
