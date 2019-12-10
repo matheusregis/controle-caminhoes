@@ -2,8 +2,8 @@ package br.edu.ifcvideira.beans;
 
 public class Produto {
 	private String descricaoProduto;
-	private double valorUnitario;
-	private int quantidadeProduto;
+	private float valorUnitario;
+	private float quantidadeProduto;
 	
 	public Produto() {
 		
@@ -13,7 +13,7 @@ public class Produto {
 		return valorUnitario;
 	}
 
-	public void setValorUnitario(double valorUnitario) {
+	public void setValorUnitario(float valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
 
@@ -25,11 +25,11 @@ public class Produto {
 		this.descricaoProduto = descricaoProduto;
 	}
 
-	public int getQuantidadeProduto() {
+	public float getQuantidadeProduto() {
 		return quantidadeProduto;
 	}
 
-	public void setQuantidadeProduto(int quantidadeProduto) {
+	public void setQuantidadeProduto(float quantidadeProduto) {
 		this.quantidadeProduto = quantidadeProduto;
 	}
 

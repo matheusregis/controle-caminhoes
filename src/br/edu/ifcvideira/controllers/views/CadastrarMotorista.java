@@ -218,6 +218,11 @@ public class CadastrarMotorista extends JFrame {
 		contentPane.add(btnConfirmar);
 		
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		btnVoltar.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnVoltar.setBounds(10, 11, 79, 27);
 		contentPane.add(btnVoltar);
