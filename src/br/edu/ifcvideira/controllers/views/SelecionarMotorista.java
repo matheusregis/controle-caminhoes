@@ -27,6 +27,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 import javax.swing.DropMode;
+import java.awt.Toolkit;
 
 public class SelecionarMotorista extends JFrame {
 
@@ -74,6 +75,8 @@ public class SelecionarMotorista extends JFrame {
 	}
 	
 	public SelecionarMotorista() throws SQLException, Exception {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SelecionarMotorista.class.getResource("/br/edu/ifcvideira/imgs/search16x16.png")));
+		setTitle("Selecionar Motorista");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1370, 700);
 		contentPane = new JPanel();
@@ -83,7 +86,7 @@ public class SelecionarMotorista extends JFrame {
 		
 		JLabel lblCadastroDeMotorista = new JLabel("Selecionar Motorista");
 		lblCadastroDeMotorista.setFont(new Font("SansSerif", Font.BOLD, 28));
-		lblCadastroDeMotorista.setBounds(320, 21, 278, 37);
+		lblCadastroDeMotorista.setBounds(538, 21, 278, 37);
 		contentPane.add(lblCadastroDeMotorista);
 		
 		JLabel lblMotorista = new JLabel("Buscar:");
@@ -136,7 +139,7 @@ public class SelecionarMotorista extends JFrame {
 		
 		JLabel IconSelecionar = new JLabel("");
 		IconSelecionar.setIcon(new ImageIcon(SelecionarMotorista.class.getResource("/br/edu/ifcvideira/imgs/search.png")));
-		IconSelecionar.setBounds(243, 11, 67, 64);
+		IconSelecionar.setBounds(450, 11, 67, 64);
 		contentPane.add(IconSelecionar);
 		
 		textCpf = new JTextField();

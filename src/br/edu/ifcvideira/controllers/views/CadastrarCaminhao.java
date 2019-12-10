@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class CadastrarCaminhao extends JFrame {
 
@@ -53,6 +54,8 @@ public class CadastrarCaminhao extends JFrame {
 	}
 	
 	public CadastrarCaminhao() throws SQLException, Exception {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastrarCaminhao.class.getResource("/br/edu/ifcvideira/imgs/truckPluss50x50.png")));
+		setTitle("Cadastro de Caminh\u00F5es");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 540, 500);
 		contentPane = new JPanel();

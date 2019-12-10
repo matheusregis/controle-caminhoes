@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class CadastrarFornecedor extends JFrame {
 
@@ -52,6 +53,8 @@ public class CadastrarFornecedor extends JFrame {
 	}
 	
 	public CadastrarFornecedor() throws SQLException, Exception {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastrarFornecedor.class.getResource("/br/edu/ifcvideira/imgs/businessman16x16.png")));
+		setTitle("Cadastro de Fornecedores");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 540, 500);
 		contentPane = new JPanel();

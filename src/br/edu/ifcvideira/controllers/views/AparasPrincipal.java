@@ -15,6 +15,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import java.awt.Color;
+import javax.swing.table.DefaultTableModel;
+import java.awt.Toolkit;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class AparasPrincipal extends JFrame {
 
@@ -41,8 +45,10 @@ public class AparasPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public AparasPrincipal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AparasPrincipal.class.getResource("/br/edu/ifcvideira/imgs/logistics-delivery-truck-in-movement.png")));
+		setTitle("Controle Entrada Caminh\u00F5es Aparas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 730, 520);
+		setBounds(100, 100, 1200, 520);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -137,11 +143,6 @@ public class AparasPrincipal extends JFrame {
 		btnSelecionar.setBounds(15, 79, 155, 25);
 		contentPane.add(btnSelecionar);
 		
-		table = new JTable();
-		table.setFont(new Font("SansSerif", Font.BOLD, 12));
-		table.setBounds(183, 56, 502, 350);
-		contentPane.add(table);
-		
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -153,6 +154,20 @@ public class AparasPrincipal extends JFrame {
 		btnSair.setFont(new Font("SansSerif", Font.BOLD, 16));
 		btnSair.setBounds(40, 415, 92, 42);
 		contentPane.add(btnSair);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(200, 84, 974, 370);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Fornecedor", "Cidade", "Placa", "Tipo Caminhao", "Modulo", "Motorista", "CPF", "Contato", "Data Emissao NF", "N\u00BA NF", "Material", "Quant.", "Valor Unit\u00E1rio"
+			}
+		));
+		scrollPane.setViewportView(table);
 	}
 	public void sair() {
 		System.exit(0);

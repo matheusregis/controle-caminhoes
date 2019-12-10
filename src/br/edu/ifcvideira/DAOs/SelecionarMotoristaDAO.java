@@ -13,14 +13,13 @@ import br.edu.ifcvideira.controllers.views.*;
 
 import br.edu.ifcvideira.beans.Caminhao;
 import br.edu.ifcvideira.beans.NotaFiscal;
-import br.edu.ifcvideira.beans.Produto;
 import br.edu.ifcvideira.utils.Conexao;
 
 public class SelecionarMotoristaDAO{
 	
 	public void cadastrarNF(NotaFiscal nf) throws SQLException, Exception{
 		try{
-			java.sql.PreparedStatement sqlPrep = Conexao.conectar().prepareStatement("INSERT INTO nf (nota, dataemissao, produto, quantidade, valorunitario) VALUES (?,?,?,?,?)");
+			java.sql.PreparedStatement sqlPrep = Conexao.conectar().prepareStatement("INSERT INTO notafiscal (nota, dataemissao, produto, quantidade, valorunitario) VALUES (?,?,?,?,?)");
 			sqlPrep.setString(1, nf.getNumeroNotaFiscal());
 			sqlPrep.setString(2, nf.getDataEmissaoNotaFiscal());
 			sqlPrep.setString(3, nf.getProduto());
