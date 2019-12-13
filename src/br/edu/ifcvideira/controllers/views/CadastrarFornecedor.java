@@ -32,10 +32,11 @@ public class CadastrarFornecedor extends JFrame {
 	private JPanel contentPane;
 	private JTextField textBuscar;
 	private JTextField textFornecedor;
-	Fornecedor fo = new Fornecedor();
-	FornecedorDAO dao = new FornecedorDAO();
 	private JTextField textCidade;
 	private JTextField textEstado;
+	Fornecedor fo = new Fornecedor();
+	FornecedorDAO dao = new FornecedorDAO();
+	
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -101,17 +102,7 @@ public class CadastrarFornecedor extends JFrame {
 		contentPane.add(btnBuscar);
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					
-					fo = dao.buscarDadosFornecedor(textBuscar.getText());
-					textFornecedor.setText(fo.getNomeFornecedor());					
-					textCidade.setText(fo.getCidade());
-					textEstado.setText(fo.getEstado());
-					
-				} catch (Exception e1) {
-					
-					e1.printStackTrace();
-				}
+				buscarFornecedor();
 			}
 		});
 		
@@ -140,19 +131,7 @@ public class CadastrarFornecedor extends JFrame {
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					dao.deletarFornecedor(fo);
-					JOptionPane.showMessageDialog(null, "O Caminhão Código: "+fo.getIdFornecedor()+"\n"
-							+ "Fornecedor: "+fo.getNomeFornecedor()+"\n"
-									+ "Cidade: "+fo.getCidade()+"\n"
-											+ "Estado: "+fo.getEstado()+"\n"
-													+ "Foi Excluído com Sucesso!");
-					limpar();
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				deletarFornecedor();
 			}
 		});
 		btnExcluir.setBackground(Color.RED);
@@ -163,32 +142,7 @@ public class CadastrarFornecedor extends JFrame {
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					fo= dao.buscarDadosFornecedor(textBuscar.getText());
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				fo.setNomeFornecedor(textFornecedor.getText());
-				fo.setCidade(textCidade.getText());
-				fo.setEstado(textEstado.getText());
-					
-					limpar();
-					try {
-						
-						dao.alterarFornecedor(fo);
-						JOptionPane.showMessageDialog(null, "O Caminhão Código: "+fo.getIdFornecedor()+"\n"
-								+ "Fornecedor: "+fo.getNomeFornecedor()+"\n"
-										+ "Cidade: "+fo.getCidade()+"\n"
-												+ "Estado: "+fo.getEstado()+"\n"
-														+ "Foi Alterado com Sucesso!");
-						
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				
+				alterarFornecedor();
 			}
 		});
 		btnAlterar.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -199,22 +153,7 @@ public class CadastrarFornecedor extends JFrame {
 		JButton btnConfirmar = new JButton("Cadastrar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				fo.setNomeFornecedor(textFornecedor.getText());
-				fo.setCidade(textCidade.getText());
-				fo.setEstado(textEstado.getText());
-				
-					limpar();
-					
-					try {
-						dao.cadastrarFornecedor(fo);
-						JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso!");
-						
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				
+				cadastrarFornecedor();				
 			}
 		});
 		btnConfirmar.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -231,9 +170,78 @@ public class CadastrarFornecedor extends JFrame {
 		btnVoltar.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnVoltar.setBounds(10, 11, 79, 27);
 		contentPane.add(btnVoltar);
+
+	}
+	public void buscarFornecedor() {
+		try {
+			
+			fo = dao.buscarDadosFornecedor(textBuscar.getText());
+			textFornecedor.setText(fo.getNomeFornecedor());					
+			textCidade.setText(fo.getCidade());
+			textEstado.setText(fo.getEstado());
+			
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+		}
+	}
+	public void deletarFornecedor() {
+		try {
+			dao.deletarFornecedor(fo);
+			JOptionPane.showMessageDialog(null, "O Fornecedor Código: "+fo.getIdFornecedor()+"\n"
+					+ "Fornecedor: "+fo.getNomeFornecedor()+"\n"
+							+ "Cidade: "+fo.getCidade()+"\n"
+									+ "Estado: "+fo.getEstado()+"\n"
+											+ "Foi Excluído com Sucesso!");
+			limpar();
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	public void alterarFornecedor() {
+		try {
+			fo= dao.buscarDadosFornecedor(textBuscar.getText());
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		fo.setNomeFornecedor(textFornecedor.getText());
+		fo.setCidade(textCidade.getText());
+		fo.setEstado(textEstado.getText());
+			
+			limpar();
+			try {
+				
+				dao.alterarFornecedor(fo);
+				JOptionPane.showMessageDialog(null, "O Fornecedor Código: "+fo.getIdFornecedor()+"\n"
+						+ "Fornecedor: "+fo.getNomeFornecedor()+"\n"
+								+ "Cidade: "+fo.getCidade()+"\n"
+										+ "Estado: "+fo.getEstado()+"\n"
+												+ "Foi Alterado com Sucesso!");
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	}
+	public void cadastrarFornecedor() {
+		fo.setNomeFornecedor(textFornecedor.getText());
+		fo.setCidade(textCidade.getText());
+		fo.setEstado(textEstado.getText());
 		
-
-
+		limpar();
+			
+		try {
+			dao.cadastrarFornecedor(fo);
+			JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso!");
+				
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+		}
 	}
 	public void limpar() {
 		textBuscar.setText(null);

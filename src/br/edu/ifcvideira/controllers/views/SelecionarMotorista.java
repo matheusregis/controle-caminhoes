@@ -22,6 +22,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -42,6 +45,13 @@ public class SelecionarMotorista extends JFrame {
 	private JTextField textMaterial;
 	private JTextField textValorUnitario;
 	private JTextField textQuantidade;
+	private JTextField textBuscarFornecedores;
+	private JTextField textNomeFornecedor;
+	private JTextField textCidade;
+	private JTextField textEstado;
+	private JTextField textModulo;
+	private JTextField textTipo;
+	private JTextField textDataEmissao;
 	
 	SelecionarMotoristaDAO daoSe = new SelecionarMotoristaDAO();
 	CaminhoesDAO daoCa = new CaminhoesDAO();
@@ -51,13 +61,8 @@ public class SelecionarMotorista extends JFrame {
 	Caminhao ca = new Caminhao();
 	Fornecedor fo = new Fornecedor();
 	NotaFiscal nf = new NotaFiscal();
-	private JTextField textBuscarFornecedores;
-	private JTextField textNomeFornecedor;
-	private JTextField textCidade;
-	private JTextField textEstado;
-	private JTextField textModulo;
-	private JTextField textTipo;
-	private JTextField textDataEmissao;
+	Movimento mov = new Movimento();
+	
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -106,16 +111,7 @@ public class SelecionarMotorista extends JFrame {
 		contentPane.add(btnBuscarMotorista);
 		btnBuscarMotorista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {	
-					mo = daoMo.buscarDadosMotorista(textBuscarMotorista.getText());
-					textNomeMotorista.setText(mo.getNomeMotorista());					
-					textCpf.setText(mo.getCpf());
-					textTelefone.setText(mo.getTelefone());
-					
-				} catch (Exception e1) {
-					
-					e1.printStackTrace();
-				}
+				buscarMotorista();
 			}
 		});
 		
@@ -301,19 +297,7 @@ public class SelecionarMotorista extends JFrame {
 		JButton btnSelecionar = new JButton("Selecionar");
 		btnSelecionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nf.setNumeroNotaFiscal(textNotaFiscal.getText());
-				nf.setDataEmissaoNotaFiscal(textDataEmissao.getText());
-				nf.setProduto(textMaterial.getText());
-				nf.setQuantidade(Integer.parseInt(textQuantidade.getText()));
-				nf.setValorUnitario(Float.parseFloat(textValorUnitario.getText()));
-				
-				try {
-					daoSe.cadastrarNF(nf);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				limpar();
+				selecionarMotorista();
 			}
 		});
 		btnSelecionar.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -341,8 +325,6 @@ public class SelecionarMotorista extends JFrame {
 		textBuscarFornecedores.setColumns(10);
 		textBuscarFornecedores.setBounds(1023, 136, 250, 26);
 		contentPane.add(textBuscarFornecedores);
-		
-		
 		
 		JLabel lblNomeFornecedor = new JLabel("Fornecedor:");
 		lblNomeFornecedor.setFont(new Font("SansSerif", Font.BOLD, 18));
@@ -383,17 +365,7 @@ public class SelecionarMotorista extends JFrame {
 		JButton btnBuscarCaminhao = new JButton();
 		btnBuscarCaminhao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {	
-					ca = daoCa.buscarPlacaCaminhao(textBuscarCaminhao.getText());
-					textPlaca.setText(ca.getPlaca());
-					opcaoModulo();
-					opcaoTipo();
-					
-					
-				} catch (Exception e1) {
-					
-					e1.printStackTrace();
-				}
+				buscarCaminhao();
 			}
 		});
 		btnBuscarCaminhao.setIcon(new ImageIcon(SelecionarMotorista.class.getResource("/br/edu/ifcvideira/imgs/searchh.png")));
@@ -403,17 +375,7 @@ public class SelecionarMotorista extends JFrame {
 		JButton btnBuscarFornecedores = new JButton();
 		btnBuscarFornecedores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					
-					fo = daoFo.buscarDadosFornecedor(textBuscarFornecedores.getText());
-					textNomeFornecedor.setText(fo.getNomeFornecedor());					
-					textCidade.setText(fo.getCidade());
-					textEstado.setText(fo.getEstado());
-					
-				} catch (Exception e1) {
-					
-					e1.printStackTrace();
-				}
+				buscarFornecedor();
 			}
 		});
 		btnBuscarFornecedores.setIcon(new ImageIcon(SelecionarMotorista.class.getResource("/br/edu/ifcvideira/imgs/searchh.png")));
@@ -441,6 +403,63 @@ public class SelecionarMotorista extends JFrame {
 		contentPane.add(textDataEmissao);
 		
 	}
+	public void buscarMotorista() {
+		try {	
+			mo = daoMo.buscarDadosMotorista(textBuscarMotorista.getText());
+			textNomeMotorista.setText(mo.getNomeMotorista());					
+			textCpf.setText(mo.getCpf());
+			textTelefone.setText(mo.getTelefone());
+			
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+		}
+	}
+	public void selecionarMotorista() {
+		nf.setNumeroNotaFiscal(textNotaFiscal.getText());
+		nf.setDataEmissaoNotaFiscal(textDataEmissao.getText());
+		nf.setProduto(textMaterial.getText());
+		nf.setQuantidade(Integer.parseInt(textQuantidade.getText()));
+		nf.setValorUnitario(Float.parseFloat(textValorUnitario.getText()));
+		try {
+			tratarDataEmissaoNf();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			daoSe.cadastrarNF(nf);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		limpar();
+	}
+	public void buscarCaminhao() {
+		try {	
+			ca = daoCa.buscarPlacaCaminhao(textBuscarCaminhao.getText());
+			textPlaca.setText(ca.getPlaca());
+			opcaoModulo();
+			opcaoTipo();
+			
+			
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+		}
+	}
+	public void buscarFornecedor() {
+		try {
+			fo = daoFo.buscarDadosFornecedor(textBuscarFornecedores.getText());
+			textNomeFornecedor.setText(fo.getNomeFornecedor());					
+			textCidade.setText(fo.getCidade());
+			textEstado.setText(fo.getEstado());
+			
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+		}
+	}
 	public void limpar() {
 		textBuscarMotorista.setText(null);
 		textNomeMotorista.setText(null);
@@ -460,11 +479,6 @@ public class SelecionarMotorista extends JFrame {
 		textValorUnitario.setText(null);
 		textQuantidade.setText(null);
 		
-		try {
-			
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
 	}
 	public void opcaoModulo() {
 		
@@ -489,5 +503,12 @@ public class SelecionarMotorista extends JFrame {
 		}else if (ca.getTipoCaminhao() == 5) {
 			textTipo.setText("RODOTREM");
 		}
+	}
+	public void tratarDataEmissaoNf() throws ParseException {
+		java.util.Date data = null;
+		SimpleDateFormat formatDate;
+		formatDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		data = formatDate.parse(nf.getDataEmissaoNotaFiscal());
+		System.out.println(data);
 	}
 }

@@ -23,7 +23,7 @@ import javax.swing.ScrollPaneConstants;
 public class AparasPrincipal extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
+	private JTable tableDadosGerais;
 
 	/**
 	 * Launch the application.
@@ -48,7 +48,7 @@ public class AparasPrincipal extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AparasPrincipal.class.getResource("/br/edu/ifcvideira/imgs/logistics-delivery-truck-in-movement.png")));
 		setTitle("Controle Entrada Caminh\u00F5es Aparas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 520);
+		setBounds(100, 100, 1481, 520);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -155,21 +155,42 @@ public class AparasPrincipal extends JFrame {
 		btnSair.setBounds(40, 415, 92, 42);
 		contentPane.add(btnSair);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(200, 84, 974, 370);
-		contentPane.add(scrollPane);
+		JScrollPane spPrincipal = new JScrollPane();
+		spPrincipal.setBounds(175, 84, 1266, 370);
+		spPrincipal.setAutoscrolls(true);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		contentPane.add(spPrincipal);
+		
+		tableDadosGerais = new JTable();
+		tableDadosGerais.setFont(new Font("SansSerif", Font.BOLD, 12));
+		tableDadosGerais.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"Fornecedor", "Cidade", "Placa", "Tipo Caminhao", "Modulo", "Motorista", "CPF", "Contato", "Data Emissao NF", "N\u00BA NF", "Material", "Quant.", "Valor Unit\u00E1rio"
 			}
 		));
-		scrollPane.setViewportView(table);
+		setarTamanhoColunasTabelaDadosGerais();
+		spPrincipal.getHorizontalScrollBar().setValue(contentPane.getHeight());
+		spPrincipal.setViewportView(tableDadosGerais);
 	}
 	public void sair() {
 		System.exit(0);
+	}
+	
+	public void setarTamanhoColunasTabelaDadosGerais() {
+		tableDadosGerais.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tableDadosGerais.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tableDadosGerais.getColumnModel().getColumn(2).setPreferredWidth(70);
+		tableDadosGerais.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tableDadosGerais.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tableDadosGerais.getColumnModel().getColumn(5).setPreferredWidth(100);
+		tableDadosGerais.getColumnModel().getColumn(6).setPreferredWidth(100);
+		tableDadosGerais.getColumnModel().getColumn(7).setPreferredWidth(100);
+		tableDadosGerais.getColumnModel().getColumn(8).setPreferredWidth(110);
+		tableDadosGerais.getColumnModel().getColumn(9).setPreferredWidth(100);
+		tableDadosGerais.getColumnModel().getColumn(10).setPreferredWidth(100);
+		tableDadosGerais.getColumnModel().getColumn(11).setPreferredWidth(100);
+		tableDadosGerais.getColumnModel().getColumn(12).setPreferredWidth(100);
 	}
 }

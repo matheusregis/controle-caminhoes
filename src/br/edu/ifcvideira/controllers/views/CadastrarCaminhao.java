@@ -90,19 +90,7 @@ public class CadastrarCaminhao extends JFrame {
 		contentPane.add(btnBuscar);
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					
-					ca = dao.buscarPlacaCaminhao(textBuscar.getText());
-					textPlaca.setText(ca.getPlaca());
-					cbTipo.setSelectedIndex(ca.getTipoCaminhao());
-					cbModulo.setSelectedIndex(ca.getModuloCaminhao());
-					
-					
-					
-				} catch (Exception e1) {
-					
-					e1.printStackTrace();
-				}
+				buscarPlaca();
 			}
 		});
 		
@@ -134,42 +122,19 @@ public class CadastrarCaminhao extends JFrame {
 		cbModulo.setBounds(130, 230, 200, 26);
 		contentPane.add(cbModulo);
 		
-		CaminhoesDAO modulo = new CaminhoesDAO();
-		List<String> listaModulo = modulo.buscaModuloCaminhao();
-		cbModulo.addItem("Selecione uma Opção");
-		for(int i = 0; i < listaModulo.size(); i++) {
-			cbModulo.addItem(listaModulo.get(i));
-		}
-		
+		listaModulo();
 		//cria comboBox Tipo e popula com dados da tabela tipocaminhao - coluna nome
 		
 		cbTipo.setFont(new Font("SansSerif", Font.BOLD, 16));
 		cbTipo.setBounds(130, 290, 200, 26);
 		contentPane.add(cbTipo);
 				
-		CaminhoesDAO tipo = new CaminhoesDAO();
-		List<String> listaTipo = tipo.buscaTipoCaminhao();
-		cbTipo.addItem("Selecione uma Opção");
-		for(int i = 0; i < listaTipo.size(); i++) {
-			cbTipo.addItem(listaTipo.get(i));
-		}
+		listaTipo();
 		
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					dao.deletarCaminhao(ca);
-					JOptionPane.showMessageDialog(null, "O Caminhão Código: "+ca.getCodigo()+"\n"
-							+ "Placa: "+ca.getPlaca()+"\n"
-									+ "Tipo Caminhão: "+ca.getTipoCaminhao()+"\n"
-											+ "Módulo: "+ca.getModuloCaminhao()+"\n"
-													+ "Foi Excluído com Sucesso!");
-					limpar();
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				deletarCaminhao();
 			}
 		});
 		btnExcluir.setBackground(Color.RED);
@@ -180,33 +145,7 @@ public class CadastrarCaminhao extends JFrame {
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					ca = dao.buscarPlacaCaminhao(textBuscar.getText());
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				ca.setPlaca(textPlaca.getText());
-				selecionarOpcao();
-				
-				if (cbModulo.getSelectedIndex() > 0 && cbTipo.getSelectedIndex() > 0) {
-					
-					limpar();
-					try {
-						
-						dao.alterarCaminhao(ca);
-						JOptionPane.showMessageDialog(null, "O Caminhão Código: "+ca.getCodigo()+"\n"
-								+ "Placa: "+ca.getPlaca()+"\n"
-										+ "Tipo Caminhão: "+ca.getTipoCaminhao()+"\n"
-												+ "Módulo: "+ca.getModuloCaminhao()+"\n"
-														+ "Foi Alterado com Sucesso!");
-						
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
+				alterarCaminhao();
 			}
 		});
 		btnAlterar.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -217,22 +156,7 @@ public class CadastrarCaminhao extends JFrame {
 		JButton btnConfirmar = new JButton("Cadastrar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				ca.setPlaca(textPlaca.getText());
-				
-				selecionarOpcao();
-				
-				if (cbModulo.getSelectedIndex() > 0 && cbTipo.getSelectedIndex() > 0) {
-					limpar();
-					try {
-						dao.cadastrarCaminhao(ca);
-						JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso!");
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-				
+				cadastrarCaminhao();				
 			}
 		});
 		btnConfirmar.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -287,6 +211,95 @@ public class CadastrarCaminhao extends JFrame {
 			ca.setTipoCaminhao(5);
 		}
 		
+	}
+	public void buscarPlaca() {
+		try {
+			
+			ca = dao.buscarPlacaCaminhao(textBuscar.getText());
+			textPlaca.setText(ca.getPlaca());
+			cbTipo.setSelectedIndex(ca.getTipoCaminhao());
+			cbModulo.setSelectedIndex(ca.getModuloCaminhao());
+			
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+		}
+	}
+	public void deletarCaminhao() {
+		try {
+			dao.deletarCaminhao(ca);
+			JOptionPane.showMessageDialog(null, "O Caminhão Código: "+ca.getCodigo()+"\n"
+					+ "Placa: "+ca.getPlaca()+"\n"
+							+ "Tipo Caminhão: "+ca.getTipoCaminhao()+"\n"
+									+ "Módulo: "+ca.getModuloCaminhao()+"\n"
+											+ "Foi Excluído com Sucesso!");
+			limpar();
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	public void alterarCaminhao() {
+		try {
+			ca = dao.buscarPlacaCaminhao(textBuscar.getText());
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		ca.setPlaca(textPlaca.getText());
+		selecionarOpcao();
+		
+		if (cbModulo.getSelectedIndex() > 0 && cbTipo.getSelectedIndex() > 0) {
+			
+			limpar();
+			try {
+				
+				dao.alterarCaminhao(ca);
+				JOptionPane.showMessageDialog(null, "O Caminhão Código: "+ca.getCodigo()+"\n"
+						+ "Placa: "+ca.getPlaca()+"\n"
+								+ "Tipo Caminhão: "+ca.getTipoCaminhao()+"\n"
+										+ "Módulo: "+ca.getModuloCaminhao()+"\n"
+												+ "Foi Alterado com Sucesso!");
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+	public void cadastrarCaminhao() {
+		ca.setPlaca(textPlaca.getText());
+		
+		selecionarOpcao();
+		
+		if (cbModulo.getSelectedIndex() > 0 && cbTipo.getSelectedIndex() > 0) {
+			limpar();
+			try {
+				dao.cadastrarCaminhao(ca);
+				JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso!");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+	public void listaModulo() throws SQLException, Exception {
+		CaminhoesDAO modulo = new CaminhoesDAO();
+		List<String> listaModulo = modulo.buscaModuloCaminhao();
+		cbModulo.addItem("Selecione uma Opção");
+		for(int i = 0; i < listaModulo.size(); i++) {
+			cbModulo.addItem(listaModulo.get(i));
+		}
+	}
+	public void listaTipo() throws SQLException, Exception {
+		CaminhoesDAO tipo = new CaminhoesDAO();
+		List<String> listaTipo = tipo.buscaTipoCaminhao();
+		cbTipo.addItem("Selecione uma Opção");
+		for(int i = 0; i < listaTipo.size(); i++) {
+			cbTipo.addItem(listaTipo.get(i));
+		}
 	}
 		
 }

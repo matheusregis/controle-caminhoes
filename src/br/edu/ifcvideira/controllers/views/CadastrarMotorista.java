@@ -32,10 +32,11 @@ public class CadastrarMotorista extends JFrame {
 	private JPanel contentPane;
 	private JTextField textBuscar;
 	private JTextField textNomeMotorista;
-	Motorista mo = new Motorista();
-	MotoristaDAO dao = new MotoristaDAO();
 	private JTextField textCpf;
 	private JTextField textTelefone;
+	Motorista mo = new Motorista();
+	MotoristaDAO dao = new MotoristaDAO();
+
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -56,7 +57,7 @@ public class CadastrarMotorista extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastrarMotorista.class.getResource("/br/edu/ifcvideira/imgs/driving-test16x16.png")));
 		setTitle("Cadastro de Motoristas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 540, 520);
+		setBounds(100, 100, 540, 479);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -84,20 +85,9 @@ public class CadastrarMotorista extends JFrame {
 		contentPane.add(btnBuscar);
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					
-					mo = dao.buscarDadosMotorista(textBuscar.getText());
-					textNomeMotorista.setText(mo.getNomeMotorista());					
-					textCpf.setText(mo.getCpf());
-					textTelefone.setText(mo.getTelefone());
-					
-				} catch (Exception e1) {
-					
-					e1.printStackTrace();
-				}
+				buscarMotorista();
 			}
 		});
-		
 		
 		textNomeMotorista = new JTextField();
 		textNomeMotorista.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -140,84 +130,34 @@ public class CadastrarMotorista extends JFrame {
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					dao.deletarMotorista(mo);
-					JOptionPane.showMessageDialog(null, "O Motorista Código: "+mo.getIdMotorista()+"\n"
-							+ "Nome: "+mo.getNomeMotorista()+"\n"
-									+ "CPF: "+mo.getCpf()+"\n"
-											+ "Telefone: "+mo.getTelefone()+"\n"
-													+ "Foi Excluído com Sucesso!");
-					limpar();
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				deletarMotorista();
 			}
 		});
 		btnExcluir.setBackground(Color.RED);
 		btnExcluir.setFont(new Font("SansSerif", Font.BOLD, 16));
-		btnExcluir.setBounds(50, 409, 89, 36);
+		btnExcluir.setBounds(50, 366, 89, 36);
 		contentPane.add(btnExcluir);
 		
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					mo = dao.buscarDadosMotorista(textBuscar.getText());
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				mo.setNomeMotorista(textNomeMotorista.getText());
-				mo.setCpf(textCpf.getText());
-				mo.setTelefone(textTelefone.getText());
-				
-				limpar();
-				try {
-					
-					dao.alterarMotorista(mo);
-					JOptionPane.showMessageDialog(null, "O Motorista Código: "+mo.getIdMotorista()+"\n"
-							+ "Nome: "+mo.getNomeMotorista()+"\n"
-									+ "CPF: "+mo.getCpf()+"\n"
-											+ "Telefone: "+mo.getTelefone()+"\n"
-													+ "Foi Alterado com Sucesso!");
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				alterarMotorista();
 			}
 		});
 		btnAlterar.setFont(new Font("SansSerif", Font.BOLD, 16));
 		btnAlterar.setBackground(Color.YELLOW);
-		btnAlterar.setBounds(200, 409, 111, 36);
+		btnAlterar.setBounds(200, 366, 111, 36);
 		contentPane.add(btnAlterar);
 		
 		JButton btnConfirmar = new JButton("Cadastrar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				mo.setNomeMotorista(textNomeMotorista.getText());
-				mo.setCpf(textCpf.getText());
-				mo.setTelefone(textTelefone.getText());
-				
-				limpar();
-				
-				try {
-					dao.cadastrarMotorista(mo);
-					JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso!");
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				cadastrarMotorista();
 			}
 		});
 		btnConfirmar.setFont(new Font("SansSerif", Font.BOLD, 16));
 		btnConfirmar.setBackground(Color.GREEN);
-		btnConfirmar.setBounds(370, 409, 111, 36);
+		btnConfirmar.setBounds(370, 366, 111, 36);
 		contentPane.add(btnConfirmar);
 		
 		JButton btnVoltar = new JButton("Voltar");
@@ -230,6 +170,77 @@ public class CadastrarMotorista extends JFrame {
 		btnVoltar.setBounds(10, 11, 79, 27);
 		contentPane.add(btnVoltar);
 		
+	}
+	public void buscarMotorista() {
+		try {
+			
+			mo = dao.buscarDadosMotorista(textBuscar.getText());
+			textNomeMotorista.setText(mo.getNomeMotorista());					
+			textCpf.setText(mo.getCpf());
+			textTelefone.setText(mo.getTelefone());
+			
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+		}
+	}
+	public void deletarMotorista() {
+		try {
+			dao.deletarMotorista(mo);
+			JOptionPane.showMessageDialog(null, "O Motorista Código: "+mo.getIdMotorista()+"\n"
+					+ "Nome: "+mo.getNomeMotorista()+"\n"
+							+ "CPF: "+mo.getCpf()+"\n"
+									+ "Telefone: "+mo.getTelefone()+"\n"
+											+ "Foi Excluído com Sucesso!");
+			limpar();
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	public void alterarMotorista() {
+		try {
+			mo = dao.buscarDadosMotorista(textBuscar.getText());
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		mo.setNomeMotorista(textNomeMotorista.getText());
+		mo.setCpf(textCpf.getText());
+		mo.setTelefone(textTelefone.getText());
+		
+		limpar();
+		try {
+			
+			dao.alterarMotorista(mo);
+			JOptionPane.showMessageDialog(null, "O Motorista Código: "+mo.getIdMotorista()+"\n"
+					+ "Nome: "+mo.getNomeMotorista()+"\n"
+							+ "CPF: "+mo.getCpf()+"\n"
+									+ "Telefone: "+mo.getTelefone()+"\n"
+											+ "Foi Alterado com Sucesso!");
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	public void cadastrarMotorista() {
+		mo.setNomeMotorista(textNomeMotorista.getText());
+		mo.setCpf(textCpf.getText());
+		mo.setTelefone(textTelefone.getText());
+		
+		limpar();
+		
+		try {
+			dao.cadastrarMotorista(mo);
+			JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso!");
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	public void limpar() {
 		textBuscar.setText(null);
